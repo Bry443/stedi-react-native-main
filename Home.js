@@ -5,11 +5,11 @@ import Icons from './Icons.js';
 import Bar  from './Bar.js';
 
 // <Bar loggedInUserEmail={props.loggedInUser}/>
-
+// https://dev.stedi.me/validate/ + token
 const Home = (props) => {
   return (
     <View>
-      <Bar loggedInUser="Brycen"/>
+      <Bar loggedInUser={props.loggedInUser}/>
       <Icons />
     </View>
   );
