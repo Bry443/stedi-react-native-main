@@ -9,32 +9,33 @@ const sendText= async (phoneNumber)=>{
       'content-type':'application/text'
     }
   });
-
+  const tokenResponseText = await tokenResponse.text()
 }
 
-const getToken = async ({phoneNumber, oneTimePassword, setUserLoggedIn}) =>{
+const getToken = async ({phoneNumber, oneTimePassword, setUserLoggedIn, setUserName}) =>{
   const tokenResponse = await fetch('https://dev.stedi.me/twofactorlogin',{
     method: 'POST',
-    body:JSON.stringify({oneTimePassword, phoneNumber}),
+    body:JSON.stringify({phoneNumber, oneTimePassword}),
     headers: {
-      'content-type':'application/json'
+      'Content-Type':'application/json'
     }
   });
 
   const responseCode = tokenResponse.status;// means loggin in successfully
   console.log("Response Status Code", responseCode);
   if(responseCode==200){
+    
+  
+    const tokenResponseString = await tokenResponse.text();
+    console.log("Token",tokenResponseString)
+    const emailResponse = await fetch('https://dev.stedi.me/validate/'+tokenResponseString)
+    const tokenEmail = await emailResponse.text();
+    console.log('tokenEmail: ' + tokenEmail);
+    setUserName(tokenEmail);
     setUserLoggedIn(true);
   }
-  const tokenResponseString = await tokenResponse.text();
-  console.log("Token",tokenResponseString)
-  const emailResponse = await fetch('https://dev.stedi.me/validate/'+tokenResponseString)
-  
-  const email = await emailResponse.text();
-
-  setUserName(email);
+  // const tokenResponseString = await tokenResponse.txt();
 }
-
 
 const Login = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("");

@@ -16,6 +16,7 @@ export default function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
 
+    console.log("email:" + userName)
   if (userLoggedIn){
   return (
     <NavigationContainer>
@@ -26,7 +27,7 @@ export default function App() {
       >
         <Tab.Screen
           name='Home'
-          children ={()=><Home loggedInUser={setUserName}/>}
+          children ={()=><Home loggedInUser={userName}/>}
           // component={Home}
            options={{
             tabBarLabel: 'Home',
@@ -68,7 +69,5 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  margin:{
-    marginTop:10
-  }
+  
 });
